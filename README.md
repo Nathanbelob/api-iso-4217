@@ -56,6 +56,11 @@ Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
    chmod -R 777 storage/
 ```
 
+10. Rode o seguinte comando para gerar documentação do projeto:
+```bash
+   php artisan l5-swagger:generate
+```
+
 ## Como parar
 
 Para parar os containers, pressione Ctrl + C no terminal onde o docker-compose up está rodando.
