@@ -1,0 +1,96 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de ISO 4217",
+        "description": "Documentação API ISO 4217",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/currency": {
+            "post": {
+                "tags": [
+                    "Currency"
+                ],
+                "summary": "Obter informações sobre moedas",
+                "description": "Retorna informações detalhadas sobre moedas a partir de seus códigos ou números.",
+                "operationId": "getCurrencyInfo",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "MXV"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "MXV"
+                                                    },
+                                                    "number": {
+                                                        "type": "string",
+                                                        "example": "979"
+                                                    },
+                                                    "decimal": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "currency": {
+                                                        "type": "string",
+                                                        "example": "Unidade Mexicana de Investimento"
+                                                    },
+                                                    "currency_locations": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "location": {
+                                                                    "type": "string",
+                                                                    "example": "México"
+                                                                },
+                                                                "icon": {
+                                                                    "type": "string",
+                                                                    "example": null,
+                                                                    "nullable": true
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
