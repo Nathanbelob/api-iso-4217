@@ -21,29 +21,29 @@ Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
    cd api-iso-4217
 ```
 
-3. Construa as imagens Docker:
+3. Copie o arquivo .env.example para o arquivo .env:
+```bash
+   cp .env.example .env
+```
+
+4. Construa as imagens Docker:
 ```bash
    docker-compose build
 ```
 
-4. Inicie os containers:
+5. Inicie os containers:
 ```bash
    docker-compose up
 ```
 
-5. Acesse o container do PHP para rodar os comandos Laravel:
+6. Acesse o container do PHP para rodar os comandos Laravel:
 ```bash
    docker-compose exec app bash
 ```
 
-6. Dentro do container, rode o comando:
+7. Dentro do container, rode o comando:
 ```bash
    composer install
-```
-
-7. Copie o arquivo .env.example para o arquivo .env:
-```bash
-   cp .env.example .env
 ```
 
 8. Dentro do container, execute as migrações do banco de dados e popule as tabelas:

@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API de ISO 4217",
+        "title": "API ISO 4217",
         "description": "Documentação API ISO 4217",
         "version": "1.0.0"
     },
