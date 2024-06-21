@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     title="API de ISO 4217",
+ *     title="API ISO 4217",
  *     version="1.0.0",
  *     description="Documentação API ISO 4217"
  * )

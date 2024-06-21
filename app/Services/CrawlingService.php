@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Symfony\Component\DomCrawler\Crawler;
 use App\Services\CrawlingServiceInterface;
@@ -19,29 +20,36 @@ class CrawlingService implements CrawlingServiceInterface
      * Fetch Currency Codes on Wikipedia
      * @param string $code code to search
      * @return Collection|null
+     * @throws Exception
      */
     public function fetchCurrencyCodes(string $code): ?Collection
     {
-        $response = $this->client->request('GET', 'https://pt.wikipedia.org/wiki/ISO_4217');
-        $content = $response->getContent();
-
-        $crawler = new Crawler($content);
-        $table = $crawler->filter('table.wikitable')->eq(0);
-        $tableData = [];
-
-        $table->filter('tr')->each(function ($row) use (&$tableData) {
-            $rowData = [];
-            $row->filter('th, td')->each(function ($cell) use (&$rowData) {
-                $rowData[] = $cell->text(); // Conteúdo da célula sem o <img>
-            });
-            $tableData[] = $rowData;
-        });
-        unset($tableData[0]); //excluindo cabeçalho da tabela
-        $tableData = $this->traitTable($tableData);
+        try{
+            $response = $this->client->request('GET', 'https://pt.wikipedia.org/wiki/ISO_4217');
+            $content = $response->getContent();
     
-        return $tableData->filter(function ($item) use ($code) {
-            return $item['code'] == $code || $item['number'] == $code;
-        })->first();
+            $crawler = new Crawler($content);
+            $table = $crawler->filter('table.wikitable')->eq(0);
+            $tableData = [];
+    
+            $table->filter('tr')->each(function ($row) use (&$tableData) {
+                $rowData = [];
+                $row->filter('th, td')->each(function ($cell) use (&$rowData) {
+                    $rowData[] = $cell->text(); // Conteúdo da célula sem o <img>
+                });
+                $tableData[] = $rowData;
+            });
+            unset($tableData[0]); //excluindo cabeçalho da tabela
+            $tableData = $this->traitTable($tableData);
+        
+            return $tableData->filter(function ($item) use ($code) {
+                return $item['code'] == $code || $item['number'] == $code;
+            })->first();
+
+        } catch (Exception $e) {
+            // Lida com outros tipos de erros
+            throw new \Exception($e->getMessage());
+        }
     }
 
     private function traitTable(array $tableData)
